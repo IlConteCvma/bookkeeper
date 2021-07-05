@@ -1,0 +1,16 @@
+language: java
+
+jdk:
+    - openjdk11
+
+addons: 
+    sonarcloud: 
+        organization: ilcontecvma
+        token: 
+            a7ce466934bb85810f1d0853d6c3ab5c4bdd9165
+
+script: 
+    
+    - mvn clean test -Pjdk-without-javah sonar:sonar -Dsonar.projectKey=IlConteCvma_bookkeeper -Dmaven.javadoc.skip=true
+    
+  
