@@ -143,6 +143,7 @@ public class MyEntryLoggerTest {
             assertEquals("EntryId ", this.entryId, readEntryId);
             assertEquals("Entry Data ", expectedValue, new String(data));
         } catch (IllegalArgumentException e) {
+            System.out.println("error");
             assertEquals("Negative position",e.getMessage());
         } catch (IOException e){
             throw e;
@@ -151,6 +152,39 @@ public class MyEntryLoggerTest {
 
 
     }
+
+
+    /*
+    @Test
+    public void test() throws IOException {
+        long location = 0;
+
+        try {
+            location = entryLogger.addEntry(ledgerId, MyEntryLoggerUtils.generateEntry(ledgerId,entryId));
+        } catch (Exception e) {
+            assertEquals("Keys and values must be >= 0",e.getMessage());
+        }
+
+        ByteBuf buf = null;
+
+        try {
+            buf = entryLogger.internalReadEntry(this.ledgerId, this.entryId, 100,this.validateEntry);
+            long readLedgerId = buf.readLong();
+            long readEntryId = buf.readLong();
+            byte[] data = new byte[buf.readableBytes()];
+            buf.readBytes(data);
+            String expectedValue = MyEntryLoggerUtils.generateDataString(this.ledgerId,this.entryId);
+            assertEquals("LedgerId ", this.ledgerId, readLedgerId);
+            assertEquals("EntryId ", this.entryId, readEntryId);
+            assertEquals("Entry Data ", expectedValue, new String(data));
+        } catch (IllegalArgumentException e) {
+            System.out.println("error");
+            assertEquals("Negative position",e.getMessage());
+        } catch (IOException e){
+            throw e;
+        }
+    }
+    */
 
 
 

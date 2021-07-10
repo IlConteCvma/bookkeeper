@@ -11,6 +11,7 @@ addons:
 
 script: 
     
-    - mvn clean test -Pjdk-without-javah sonar:sonar -Dsonar.projectKey=IlConteCvma_bookkeeper -Dmaven.javadoc.skip=true
+    - mvn clean test -Pjdk-without-javah
+    - mvn sonar:sonar -Dsonar.projectKey=IlConteCvma_bookkeeper -Dmaven.javadoc.skip=true
     
   

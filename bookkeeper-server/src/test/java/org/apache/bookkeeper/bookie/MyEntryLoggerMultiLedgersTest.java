@@ -45,7 +45,7 @@ public class MyEntryLoggerMultiLedgersTest {
     @Parameterized.Parameters
     public static Collection<?> getTestParameters() {
         return Arrays.asList(new Object[][]{
-                {15,10,true},
+                {20,10,true},
                 {15,10,false}
 
 

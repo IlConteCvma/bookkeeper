@@ -36,28 +36,35 @@ public class MyAsyncCreateLedgerTest extends BookKeeperClusterTestCase {
     private LedgerHandle ledgerHandle;
     private AtomicBoolean error;
     private BKException bkException;
+    private boolean beforeClose;
 
 
     @Parameterized.Parameters
     public static Collection<?> getTestParameters() {
         return Arrays.asList(new Object[][]{
-                {-1,3,2},
-                {6,6,4},
-                {3,2,1}
+                {7,6,4,false},
+                {7,2,4,false},
+                {1,2,3,false},
+                {0,0,0,false},
+                {2,0,0,false},
+                {2,-1,-3,false},
+                {-1,3,2,false},
+                {3,1,1,true}
 
-                //{0L,0L,false}, as expected the test fail (assertion)because there are no validation
-                //{0L,-1L,false}
+
+
+
 
 
         });
     }
 
-    public MyAsyncCreateLedgerTest(int ensSize, int writeQuorumSize, int ackQuorumSize){
+    public MyAsyncCreateLedgerTest(int ensSize, int writeQuorumSize, int ackQuorumSize,boolean beforeClose){
         super(numberOfBookie);
         this.ensSize = ensSize;
         this.writeQuorumSize = writeQuorumSize;
         this.ackQuorumSize = ackQuorumSize;
-
+        this.beforeClose = beforeClose;
 
     }
 
@@ -103,9 +110,15 @@ public class MyAsyncCreateLedgerTest extends BookKeeperClusterTestCase {
     * -> The write quorum must be larger than the ack quorum (from documentation)
     * */
     @Test
-    public void test(){
+    public void test() throws BKException, InterruptedException {
         Object lock = new Object();
         LOG.info("----------START------------");
+
+        if (beforeClose){
+            bkc.close();
+        }
+
+
         try {
             bkc.asyncCreateLedger(ensSize,writeQuorumSize,ackQuorumSize,digestType,
                     PASSWORD,cb,lock,null);
@@ -136,7 +149,11 @@ public class MyAsyncCreateLedgerTest extends BookKeeperClusterTestCase {
                  * If ensemble size is greater than number of bookies expected:BKNotEnoughBookiesException
                  * */
                 LOG.error("Find error:" + bkException.getMessage());
-                assertEquals(BKException.BKNotEnoughBookiesException.class,bkException.getClass());
+                //assertEquals(BKException.BKNotEnoughBookiesException.class,bkException.getClass());
+                if (!(bkException.getMessage().contains("BookKeeper client is closed") ||
+                        BKException.BKNotEnoughBookiesException.class == bkException.getClass())){
+                    fail();
+                }
             }
 
         }catch (IllegalArgumentException e){
@@ -151,6 +168,8 @@ public class MyAsyncCreateLedgerTest extends BookKeeperClusterTestCase {
         LOG.info("----------END------------");
 
     }
+
+
 
 
 }
