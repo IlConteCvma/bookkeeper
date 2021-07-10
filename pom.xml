@@ -200,6 +200,7 @@
     <spotbugs-maven-plugin.version>3.1.8</spotbugs-maven-plugin.version>
     <forkCount.variable>1</forkCount.variable>
 
+
     <!--Jacoco-->
     <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
    <!-- <sonar.coverage.exclusions>jacoco-report/**</sonar.coverage.exclusions> -->
@@ -845,6 +846,8 @@
           <version>3.9.0.2155</version>
         </plugin>
 
+
+
       </plugins>
     </pluginManagement>
     <plugins>
@@ -1019,6 +1022,9 @@
           <consoleOutput>true</consoleOutput>
         </configuration>
       </plugin>
+
+
+
     </plugins>
   </build>
   <profiles>
@@ -1149,7 +1155,7 @@
     <profile>
       <id>coverage</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
+        <activeByDefault>false</activeByDefault>
       </activation>
       <build>
         <plugins>
@@ -1190,6 +1196,9 @@
         </plugins>
       </build>
     </profile>
+
+
+
 
   </profiles>
 </project>
