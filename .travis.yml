@@ -1,8 +1,26 @@
+  
 language: java
 
-jdk:
-    - openjdk11
+matrix:
+  include:
+    - os: linux
+      arch: arm64
+      jdk: openjdk11
+      
 
+cache:
+  directories:
+  - "$HOME/.m2"
+
+addons:
+  apt:
+    packages:
+    - libcppunit-dev
+
+install:
+  - if [ "${TRAVIS_CPU_ARCH}" == "arm64" ]; then
+     sudo apt-get install maven;
+    fi
 addons: 
     sonarcloud: 
         organization: ilcontecvma
