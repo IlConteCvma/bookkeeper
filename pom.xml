@@ -205,7 +205,7 @@
     <jacoco-maven-plugin.version>0.8.6</jacoco-maven-plugin.version>
    <!-- <sonar.coverage.exclusions>jacoco-report/**</sonar.coverage.exclusions> -->
     <aggregate.report.dir>tests/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
-
+  </properties>
 
   <!-- dependency definitions -->
   <dependencyManagement>
